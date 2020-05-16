@@ -9,21 +9,29 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Login extends JFrame {
 
+	private Image img_logo = new ImageIcon("/D:/Workspace/Stappler/src/res/stappler_logo.png").getImage().getScaledInstance(215, 250,Image.SCALE_SMOOTH);
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtUsername;
+	private JPasswordField txtPassword;
+	private JLabel loginMessage = new JLabel("");
 
 	/**
 	 * Launch the application.
@@ -53,24 +61,83 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField.setBounds(139, 128, 386, 32);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtUsername = new JTextField();
+		txtUsername.setText("Username");
+		txtUsername.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtUsername.getText().equals("Username")) {
+					txtUsername.setText("");
+				}
+				else {
+					txtUsername.selectAll();
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtUsername.getText().equals("")) {
+					txtUsername.setText("Username");
+				}
+			}
+		});
+		txtUsername.setBorder(null);
+		txtUsername.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		txtUsername.setBounds(197, 165, 233, 37);
+		contentPane.add(txtUsername);
+		txtUsername.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		passwordField.setBounds(139, 184, 386, 32);
-		contentPane.add(passwordField);
+		txtPassword = new JPasswordField();
+		txtPassword.setText("Password");
+		txtPassword.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(txtPassword.getText().equals("Password")) {
+					txtPassword.setEchoChar('●');
+					txtPassword.setText("");
+				}
+				else {
+					txtPassword.selectAll();
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtPassword.getText().equals("")) {
+					txtPassword.setText("Password");
+					txtPassword.setEchoChar((char)0);
+				}
+			}
+		});
+		txtPassword.setBorder(null);
+		txtPassword.setEchoChar((char)0);
+		txtPassword.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		txtPassword.setBounds(197, 212, 233, 37);
+		contentPane.add(txtPassword);
 		
 		JButton loginButton = new JButton("Login");
+		loginButton.setBorder(null);
+		loginButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin123")) {
+					loginMessage.setText("");
+					JOptionPane.showMessageDialog(null,"Login Successful");
+				}
+				else if(txtUsername.getText().equals("") || txtUsername.getText().equals("Username") || txtPassword.getText().equals("") || txtPassword.getText().equals("password"))
+				{
+					loginMessage.setText("Please input all requirements!");
+				}
+				else {
+					loginMessage.setText("Invalid Username/Password!");
+				}
+			}
+		});
 		loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		loginButton.setBounds(139, 245, 169, 46);
+		loginButton.setBounds(197, 283, 104, 46);
 		contentPane.add(loginButton);
 		
 		JButton closeButton = new JButton("Close");
+		closeButton.setBorder(null);
 		closeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -83,25 +150,30 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		closeButton.setBounds(356, 245, 169, 46);
+		closeButton.setBounds(315, 283, 115, 46);
 		contentPane.add(closeButton);
 		
 		JLabel username = new JLabel("Username");
 		username.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		username.setBounds(60, 128, 71, 32);
+		username.setBounds(118, 171, 71, 32);
 		contentPane.add(username);
 		
 		JLabel password = new JLabel("Password");
+		password.setHorizontalAlignment(SwingConstants.CENTER);
 		password.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		password.setBounds(60, 184, 71, 32);
+		password.setBounds(118, 218, 71, 32);
 		contentPane.add(password);
 		
-		JLabel lblNewLabel_2 = new JLabel("LOGIN");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setForeground(new Color(255, 250, 250));
-		lblNewLabel_2.setFont(new Font("Arial Black", Font.PLAIN, 40));
-		lblNewLabel_2.setBounds(139, 31, 386, 87);
-		contentPane.add(lblNewLabel_2);
+		JLabel logo = new JLabel("");
+		logo.setHorizontalAlignment(SwingConstants.CENTER);
+		logo.setBounds(8, 28, 613, 145);
+		contentPane.add(logo);
+		logo.setIcon(new ImageIcon(img_logo));
+		
+		loginMessage.setFont(new Font("Sitka Text", Font.BOLD, 15));
+		loginMessage.setBounds(197, 249, 233, 37);
+		contentPane.add(loginMessage);
+		setLocationRelativeTo(null);
 		
 		setUndecorated(true); //removes border
 	}
