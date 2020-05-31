@@ -81,7 +81,7 @@ public class Login extends JFrame {
 			}
 		});
 		txtUsername.setBorder(null);
-		txtUsername.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtUsername.setBounds(197, 165, 233, 37);
 		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
@@ -109,7 +109,7 @@ public class Login extends JFrame {
 		});
 		txtPassword.setBorder(null);
 		txtPassword.setEchoChar((char)0);
-		txtPassword.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtPassword.setBounds(197, 212, 233, 37);
 		contentPane.add(txtPassword);
 		
@@ -121,6 +121,9 @@ public class Login extends JFrame {
 				if(txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin123")) {
 					loginMessage.setText("");
 					JOptionPane.showMessageDialog(null,"Login Successful");
+					FrameDashboard dashboard  = new FrameDashboard();
+					dashboard.show();
+					Login.this.dispose();
 				}
 				else if(txtUsername.getText().equals("") || txtUsername.getText().equals("Username") || txtPassword.getText().equals("") || txtPassword.getText().equals("password"))
 				{
