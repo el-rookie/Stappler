@@ -6,7 +6,7 @@ Stappler, the study planner.
 Software developed on the course of the Software Engineering subject
 at the Computer Engineering and Informatics Department, University of Patras.
 
-To Run the programm:
+To Run the program:
 1. IMPORTANT STEP: DISABLE THE ANTIVIRUS
 2. Download the zip file from clone/download
 3. Extract zip file
